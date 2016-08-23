@@ -1,7 +1,55 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+
+  # ménage
+  Opening.destroy_all
+  Box.destroy_all
+  User.destroy_all
+  puts "Ménage effectué !"
+
+  users    = []
+  boxes    = []
+  openings = []
+
+  100.times do
+    u = User.new
+    u.last_name  = Faker::Name.last_name.upcase
+    u.first_name = Faker::Name.first_name.capitalize
+    u.email = Faker::Internet.email
+    u.encrypted_password = 'toto'
+    u.save
+    users << u
+  end
+  puts "Users générés !"
+
+  300.times do
+    b = Box.new
+    b.title = Faker::Book.title
+    b.content = Faker::Lorem.paragraph(2)
+    b.latitude = Faker::Address.latitude
+    b.longitude = Faker::Address.longitude
+    b.expiration_date_time = Faker::Time.forward(7, :morning)
+    b.icon = Faker::SlackEmoji
+    b.openings_max = rand(1..2) == 1 ? nil : rand(1..7) # 1 fois sur 2, pas de nb limite
+    b.user = users.sample
+    b.save
+    boxes << b
+  end
+  puts "Boxs générées !"
+
+  500.times do
+    o = Opening.new
+    o.box = boxes.sample
+    o.user = users.sample
+    o.rating = rand(1..4) == 1 ? nil : rand(0..5) # 1 fois sur 4, pas de rating laissé
+    o.save
+    openings << o
+  end
+  puts "Openings générées !"
+
+# p users
+# p boxes
+# p openings
+
+
+
+

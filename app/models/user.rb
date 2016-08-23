@@ -3,10 +3,10 @@ class User < ApplicationRecord
   has_many :boxes
   has_many :openings
 
-  validates :first_name, :last_name, :email, :password, presence: true
+  validates :first_name, :last_name, :email, :encrypted_password, presence: true
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
+         :recoverable, :rememberable, :trackable, #:validatable,
          :omniauthable, omniauth_providers: [:facebook]
 
   def self.find_for_facebook_oauth(auth)
