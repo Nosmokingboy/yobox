@@ -15,7 +15,7 @@ require 'faker'
     u.last_name  = Faker::Name.last_name.upcase
     u.first_name = Faker::Name.first_name.capitalize
     u.email = Faker::Internet.email
-    u.encrypted_password = 'toto'
+    u.password = 'totototo'
     u.save
     users << u
   end
