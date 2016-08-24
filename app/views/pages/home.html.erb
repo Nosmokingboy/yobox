@@ -9,11 +9,10 @@
 
           navigator.geolocation.getCurrentPosition(function(location)
           {
-            var $lat = location.coords.latitude;
-            var $lng = location.coords.longitude;
-
+            var lat = location.coords.latitude;
+            var lng = location.coords.longitude;
             var mapOptions = {
-              center: new google.maps.LatLng($lat, $lng),
+              center: new google.maps.LatLng(lat, lng),
               zoom: 18
             };
 
