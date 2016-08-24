@@ -27,7 +27,7 @@ require 'faker'
     b.content = Faker::Lorem.paragraph(2)
     b.latitude = Faker::Address.latitude
     b.longitude = Faker::Address.longitude
-    b.expiration_date_time = Faker::Time.forward(7, :morning)
+    b.expiration_date_time = Faker::Time.between(DateTime.now - 7, DateTime.now + 7)
     b.icon = Faker::SlackEmoji
     b.openings_max = rand(1..2) == 1 ? nil : rand(1..7) # 1 fois sur 2, pas de nb limite
     b.user = users.sample
@@ -49,7 +49,3 @@ require 'faker'
 # p users
 # p boxes
 # p openings
-
-
-
-
