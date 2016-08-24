@@ -8,7 +8,14 @@ gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'devise', github: 'plataformatec/devise'
 gem 'redis'
-gem 'faker'
+
+gem 'faker'                           # ajout Anik pour le seed
+
+gem "coffee-rails"                    # ..............................
+gem "gmaps4rails"                     # ..............................
+source 'https://rails-assets.org' do  # .... ajouts Anik pour GMaps ..
+  gem "rails-assets-underscore"       # ..............................
+end                                   # ..............................
 
 gem 'sass-rails'
 gem 'jquery-rails'
