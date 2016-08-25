@@ -1,0 +1,7 @@
+<h2><%= box.title %></h2>
+
+<% if box.can_be_openned_by?(current_user) %>
+  <%= link_to "see box", box_path(box) %>
+<% else %>
+  TOO FAR
+<% end %>
