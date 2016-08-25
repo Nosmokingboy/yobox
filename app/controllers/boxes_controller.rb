@@ -15,6 +15,7 @@ class BoxesController < ApplicationController
 
   def create
     @box = Box.new(box_params)
+    @box.user = current_user
     if @box.save
       redirect_to box_path(@box)
     else
@@ -35,7 +36,7 @@ class BoxesController < ApplicationController
 private
 
   def box_params
-    params.require(:box).permit(:title, :content, :expiration_date_time, :icon, :maximum_openings)
+    params.require(:box).permit(:title, :content, :expiration_date_time, :icon, :maximum_openings, :latitude, :longitude)
   end
 end
 
