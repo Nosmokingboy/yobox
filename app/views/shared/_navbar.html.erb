@@ -19,12 +19,6 @@
     <% if user_signed_in? %>
 
       <!-- Notification -->
-      <%= link_to "#", class: "navbar-wagon-item navbar-wagon-link" do %>
-        <div class="badge-container">
-          <i class="fa fa-envelope-o"></i>
-          <div class="badge badge-blue">3</div>
-        </div>
-      <% end %>
 
       <!-- Profile picture and dropdown -->
       <div class="navbar-wagon-item">
@@ -57,12 +51,12 @@
     <% else %>
 
       <!-- Login text link -->
-      <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
+      <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-button btn" %>
 
     <% end %>
 
     <!-- Button (call-to-action) -->
-    <%= link_to t(".top_call_to_action", default: "Drop a box!"), new_box_path, class: "navbar-wagon-item navbar-wagon-button btn" %>
+    <%= link_to t(".top_call_to_action", default: "Create a box"), new_box_path, class: "navbar-wagon-item navbar-wagon-button btn " %>
   </div>
 
   <!-- Dropdown list appearing on mobile only -->
