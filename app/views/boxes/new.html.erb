@@ -1,7 +1,27 @@
 <%= simple_form_for [@box] do |b| %>
   <%= b.input :title %>
   <%= b.input :content, as: :text %>
-  <%= b.input :expiration_date_time %>
+  <%= b.input :box_duration, collection: ["1 single opening", "1 day", "7 days"] %>
+  <%= b.hidden_field :latitude %>
+  <%= b.hidden_field :longitude %>
   <%= b.input :icon %>
   <%= b.submit "Drop my box", class: "btn btn-primary" %>
 <% end %>
+
+<% content_for(:after_js) do %>
+  <script>
+    $(document).on('ready', function() {
+      navigator.geolocation.getCurrentPosition(function(location) {
+        var lat = location.coords.latitude;
+        var lng = location.coords.longitude;
+        $('#box_longitude').val(lng);
+        $('#box_latitude').val(lat);
+      });
+
+      // $('#box_latitude').val(1);
+    });
+  </script>
+<% end %>
+
+
+
