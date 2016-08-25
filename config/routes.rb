@@ -6,6 +6,4 @@ Rails.application.routes.draw do
   resources :boxes, only: [:new, :create, :index, :show] do
     resources :openings, only: [:create]
   end
-  resources :openings, only: [:edit, :update]
-
 end
