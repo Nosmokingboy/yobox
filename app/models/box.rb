@@ -6,7 +6,6 @@ class Box < ApplicationRecord
   validates_associated :user
 
   reverse_geocoded_by :latitude, :longitude
-  after_validation :reverse_geocode  # auto-fetch address
 
   scope :limited, -> { where.not(openings_max: nil) }
   scope :nolimit, -> { where(openings_max: nil) }
