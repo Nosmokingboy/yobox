@@ -21,6 +21,11 @@ class Box < ApplicationRecord
     # compare with self.distance_from([40.714,-100.234]) < 500
   end
 
+  def first_url
+    url_regex = /https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w\.?=&-]*\/?/
+    content.match(url_regex).to_s if content.match(url_regex)
+  end
+
   private
   def self.views(box)
     cpt = Opening.all.where("box_id=?",box.id).count

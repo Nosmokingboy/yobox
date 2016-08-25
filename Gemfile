@@ -8,7 +8,10 @@ gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'devise', github: 'plataformatec/devise'
 gem 'redis'
+gem 'iframely'
+gem 'rinku'
 gem 'geocoder'
+
 
 gem 'faker'                           # ajout Anik pour le seed
 

@@ -1,3 +1,7 @@
-Ici le formulaire de création d'un boîte
-<br>
-<%= link_to "Créer ma boîte", boxes_path %>
+<%= simple_form_for [@box] do |b| %>
+  <%= b.input :title %>
+  <%= b.input :content, as: :text %>
+  <%= b.input :expiration_date_time %>
+  <%= b.input :icon %>
+  <%= b.submit "Drop my box", class: "btn btn-primary" %>
+<% end %>
