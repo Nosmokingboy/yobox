@@ -1,7 +1,7 @@
 <%= simple_form_for [@box] do |b| %>
   <%= b.input :title %>
   <%= b.input :content, as: :text %>
-  <%= b.input :expiration_date_time %>
+  <%= b.input :box_duration, collection: ["1 single opening", "1 day", "7 days"] %>
   <%= b.hidden_field :latitude %>
   <%= b.hidden_field :longitude %>
   <%= b.input :icon %>

@@ -1,8 +1,9 @@
 class Box < ApplicationRecord
+  attr_accessor :box_duration
   belongs_to :user
   has_many :openings
 
-  validates :title, :content, :latitude, :longitude, :expiration_date_time, presence: true
+  validates :title, :content, :latitude, :longitude, presence: true
   validates_associated :user
 
   reverse_geocoded_by :latitude, :longitude
@@ -24,6 +25,17 @@ class Box < ApplicationRecord
   def first_url
     url_regex = /https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w\.?=&-]*\/?/
     content.match(url_regex).to_s if content.match(url_regex)
+  end
+
+  def set_duration(duration)
+    case duration
+      when "1 single opening"
+        self.openings_max = 1
+      when "1 day"
+        self.expiration_date_time = DateTime.now + 1.days
+      when "7 days"
+        self.expiration_date_time = DateTime.now + 7.days
+    end
   end
 
   private
