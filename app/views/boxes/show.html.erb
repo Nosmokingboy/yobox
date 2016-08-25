@@ -1,1 +1,12 @@
-show de la boîte
+
+<h1>
+  <%= @box.title %>
+</h1>
+
+<div class="content">
+  <%= Rinku.auto_link(@box.content, :all, 'target="_blank"').html_safe %>
+</div>
+
+<div class="iframe">
+  <%= @iframe %>
+</div>

@@ -11,9 +11,9 @@ class BoxesController < ApplicationController
 
   def create
     @box = Box.new(box_params)
-      if @box.save
+    if @box.save
       redirect_to box_path(@box)
-      else
+    else
       render :new
     end
   end
@@ -24,6 +24,8 @@ class BoxesController < ApplicationController
 
   def show
     @box = Box.find(params[:id])
+    iframely = Iframely::Requester.new api_key: ENV['IFRAMELY_KEY']
+    @iframe = iframely.get_oembed_json(@box.first_url)["html"].html_safe
   end
 
 private
