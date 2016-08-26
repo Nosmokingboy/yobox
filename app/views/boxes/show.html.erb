@@ -1,12 +1,15 @@
+<div class="container">
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
+  <h1>
+    <%= @box.title %>
+  </h1>
+  <br>
+  <div class="content">
+    <%= Rinku.auto_link(@box.content, :all, 'target="_blank"').html_safe %>
+  </div
 
-<h1>
-  <%= @box.title %>
-</h1>
-<br>
-<div class="content">
-  <%= Rinku.auto_link(@box.content, :all, 'target="_blank"').html_safe %>
+  <div class="iframe">
+    <%= @iframe %>
+  </div>
 </div>
-
-<div class="iframe">
-  <%= @iframe %>
 </div>
