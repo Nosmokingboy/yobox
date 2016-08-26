@@ -31,7 +31,12 @@ class BoxesController < ApplicationController
   def show
     @box = Box.find(params[:id])
     iframely = Iframely::Requester.new api_key: ENV['IFRAMELY_KEY']
-    @iframe = iframely.get_oembed_json(@box.first_url)["html"].html_safe
+    api_response = iframely.get_oembed_json(@box.first_url)["html"]
+    if api_response.nil?
+      @iframe = nil
+    else
+      @iframe = iframely.get_oembed_json(@box.first_url)["html"].html_safe
+    end
     current_user.openings.create(box: @box)
   end
 
