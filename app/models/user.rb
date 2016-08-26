@@ -28,4 +28,28 @@ class User < ApplicationRecord
 
     return user
   end
+
+  def openings_count
+    self.openings.count
+  end
+
+  def box_count
+    self.boxes.count
+  end
+
+  def own_boxes_openings_count
+    self.boxes.map { |box| box.openings.count }.reduce(:+)
+  end
+
+  def average_rating
+    all_ratings = []
+    self.boxes.each do |box|
+      all_ratings << box.openings.pluck(:rating)
+    end
+    unless all_ratings.empty?
+      all_ratings.reduce(:+) / all_ratings.count
+    end
+  end
+
+
 end

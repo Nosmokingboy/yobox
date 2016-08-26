@@ -38,7 +38,7 @@ class Box < ApplicationRecord
     end
   end
 
-  private
+  #private
   def self.views(box)
     cpt = Opening.all.where("box_id=?",box.id).count
   end

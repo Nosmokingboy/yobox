@@ -10,7 +10,7 @@ users    = []
 b1, b2, b3, b4 = [], [], [], []
 openings = []
 
-100.times do
+5.times do
   u = User.new
   u.last_name  = Faker::Name.last_name.upcase
   u.first_name = Faker::Name.first_name.capitalize
@@ -70,15 +70,15 @@ def create_boxes(min_lat, max_lat, min_lng, max_lng, number, reach, users, links
   res
 end
 
-b1 = create_boxes(-35.00000, 50.00000, -120.000, 145.000,  100, "world",     users, links)
-b2 = create_boxes(44.00000,  50.00000, -5.00000, 9.00000,  200, "france",    users, links)
-b3 = create_boxes(44.00000,  45.50000, -1.15000, 1.02000,  200, "aquitaine", users, links)
-b4 = create_boxes(44.81000,  44.86000, -0.60320, -0.52450, 300, "bordeaux",  users, links)
+b1 = create_boxes(-35.00000, 50.00000, -120.000, 145.000,  5, "world",     users, links)
+b2 = create_boxes(44.00000,  50.00000, -5.00000, 9.00000,  5, "france",    users, links)
+b3 = create_boxes(44.00000,  45.50000, -1.15000, 1.02000,  5, "aquitaine", users, links)
+b4 = create_boxes(44.81000,  44.86000, -0.60320, -0.52450, 5, "bordeaux",  users, links)
 
 (b1 << b2 << b3 << b4).flatten!
 puts "  (total: #{b1.count} boxes seeded)"
 
-800.times do
+15.times do
   o = Opening.new
   o.box = b1.sample
   o.user = users.sample
