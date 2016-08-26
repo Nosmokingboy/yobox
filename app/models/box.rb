@@ -30,7 +30,8 @@ class Box < ApplicationRecord
   def set_duration(duration)
     case duration
       when "1 single opening"
-        self.openings_max = 1
+        self.openings_max = 2
+        self.expiration_date_time = DateTime.now + 7.days
       when "1 day"
         self.expiration_date_time = DateTime.now + 1.days
       when "7 days"
