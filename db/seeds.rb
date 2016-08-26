@@ -86,6 +86,17 @@ puts "  (total: #{b1.count} boxes seeded)"
   o.save
   openings << o
 end
+
+# initialisation
+def init_counter
+  execute <<-SQL.squish
+      UPDATE boxes
+         SET openings_count = (SELECT count(1)
+                                 FROM openings
+                                WHERE openings.box_id = boxes.id);
+  SQL
+end
+
 puts "- #{Opening.all.count} openings seeded!"
 puts "-"*30
 # p users

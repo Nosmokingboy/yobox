@@ -3,15 +3,25 @@ class BoxesController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index ]
 
   def index
+    @recherche = ""
+    respond_to do |format|
+      format.html { "toto" }
+      format.json {  }
+    end
     # TODO: get GPS from user
-    @boxes = Box.all.near("17 place de la Bourse 33000", 5).openables
-
+    @boxes = Box.all.near("17 place de la Bourse 33000", 1).openables
     @hash = Gmaps4rails.build_markers(@boxes) do |box, marker|
       marker.lat box.latitude
       marker.lng box.longitude
-      marker.infowindow render_to_string(partial: "/boxes/infowindow", locals: { box: box })
+      marker.picture({
+       "url" => "http://nouveau.tanas.net/box.png",
+       "width" =>  32,
+       "height" => 32})
+      marker.infowindow render_to_string(:partial => "/boxes/infowindow", locals: { box: box})
     end
+
   end
+
 
   def create
     @box = Box.new(box_params)

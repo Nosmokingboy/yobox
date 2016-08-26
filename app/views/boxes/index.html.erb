@@ -1,41 +1,52 @@
 <div class="map-container">
   <div class="wrapper">
-
     <div id="map" style="width: 100%; height: 600px;"></div>
 
     <% content_for(:after_js) do %>
-      <script>
-        $(document).on('ready', function() {
 
-          navigator.geolocation.getCurrentPosition(function(location)
-          {
-            var $lat = location.coords.latitude;
-            var $lng = location.coords.longitude;
+    <script type="text/javascript">
+      var mapOptions = {zoom: 140};
+      handler = Gmaps.build('Google');
+      handler.buildMap({ provider: {mapOptions}, internal: {id: 'map'}}, function(){
+        markers = handler.addMarkers(<%= raw @hash.to_json %>);
+          handler.bounds.extendWith(markers);
+          handler.fitMapToBounds();
+      });
 
-            var mapOptions = {
-              center: new google.maps.LatLng($lat, $lng),
-              zoom: 14,
-              styles: [{"featureType":"administrative","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#519c2f"},{"gamma":"1.27"}]},{"featureType":"poi.park","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#e4bd2e"},{"weight":"3.14"},{"gamma":"1.58"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"weight":"0.38"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#f28a17"}]},{"featureType":"transit.station.airport","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"geometry.fill","stylers":[{"color":"#f4c902"},{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"labels.text.fill","stylers":[{"color":"#a11212"},{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"labels.text.stroke","stylers":[{"color":"#ff7676"},{"weight":"0.69"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#13646e"}]}]
-            };
+      refreshPosition();
+      setInterval(function(){
+        console.log("send GPS to /refresh_position");
+        refreshPosition();
+      }, 10 * 100000)
 
-            var handler = Gmaps.build('Google');
-            handler.buildMap( { provider: mapOptions, internal: { id: 'map' } }, function() {
-              markers = handler.addMarkers(<%= raw @hash.to_json %>);
-            });
+      function refreshPosition() {
+        // get GPS
+        navigator.geolocation.getCurrentPosition(function(location) {
+          var lat = location.coords.latitude;
+          var lng = location.coords.longitude;
+          // send GPS to /refresh_position
+          $.ajax({
+            type: "POST",
+            <% if Rails.env == "development" %>
+            url: "http://localhost:3000/refresh_position",
+            <% else %>
+            url: "http://yobox.herokuapp.com/refresh_position",
+            <% end %>
+            data: { lat: lat, lng: lng },
+            success: function(data){
+              // receive new markers
+              console.log('---')
+              //console.log(data);
+              // update markers
+              // recenter map
+            }
+          });
+        });
+      }
 
-          }); <!-- fin du navigator.geolocation -->
+    </script>
 
-        }); <!-- fin du document.ready -->
-      </script>
     <% end %>
-
 
   </div> <!-- end wrapper -->
 </div> <!-- end map-container -->
-
-
-
-
-
-
-
