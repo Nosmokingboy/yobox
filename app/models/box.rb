@@ -41,7 +41,7 @@ class Box < ApplicationRecord
 
   def time_left
     time_left = ((self.expiration_date_time - DateTime.now) / 60 / 60).round
-    "This content will be destroyed in #{time_left} hours !!"
+    "#{time_left} hours !!"
   end
 
   private
