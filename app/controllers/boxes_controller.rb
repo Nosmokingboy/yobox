@@ -8,7 +8,7 @@ class BoxesController < ApplicationController
       format.html { "toto" }
       format.json {  }
     end
-    # TODO: get GPS from user
+    # get GPS from user
     @boxes = Box.all.near("17 place de la Bourse 33000", 1).openables
     @hash = Gmaps4rails.build_markers(@boxes) do |box, marker|
       marker.lat box.latitude
@@ -19,7 +19,6 @@ class BoxesController < ApplicationController
        "height" => 32})
       marker.infowindow render_to_string(:partial => "/boxes/infowindow", locals: { box: box})
     end
-
   end
 
 

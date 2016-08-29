@@ -1,11 +1,8 @@
 class PositionsController < ApplicationController
-
   skip_before_action :authenticate_user!, only: [ :update ]
 
   def update
-
     session[:gps] = { lat: params[:lat] , lng: params[:lng] }
-
     @boxes = Box.all.near([session[:gps][:lat], session[:gps][:lng]], 10).openables
     @hash = Gmaps4rails.build_markers(@boxes) do |box, marker|
       marker.lat box.latitude
