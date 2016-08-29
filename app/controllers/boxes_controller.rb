@@ -4,7 +4,7 @@ class BoxesController < ApplicationController
 
   def index
     # TODO: get GPS from user
-    @boxes = Box.all.near("17 place de la Bourse 33000", 5).openables
+    @boxes = Box.all.near("38 place de la Bourse 33000", 5).openables
 
     @hash = Gmaps4rails.build_markers(@boxes) do |box, marker|
       marker.lat box.latitude
@@ -31,7 +31,13 @@ class BoxesController < ApplicationController
   def show
     @box = Box.find(params[:id])
     iframely = Iframely::Requester.new api_key: ENV['IFRAMELY_KEY']
-    @iframe = iframely.get_oembed_json(@box.first_url)["html"].html_safe
+    api_response = iframely.get_oembed_json(@box.first_url)["html"]
+    if api_response.nil?
+      @iframe = nil
+    else
+      @iframe = iframely.get_oembed_json(@box.first_url)["html"].html_safe
+    end
+    current_user.openings.create(box: @box)
   end
 
 private

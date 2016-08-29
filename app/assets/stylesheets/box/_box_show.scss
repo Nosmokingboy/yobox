@@ -1,0 +1,31 @@
+.item-title {
+    background: #f857a6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #f857a6 , #ff5858); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #f857a6 , #ff5858); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  h1 {
+    margin: 0;
+    padding: 20px;
+    font-weight: 600;
+    color: white;
+  }
+}
+
+.box-content {
+  position: relative;
+  padding: 20px;
+  font-size: 16px;
+  color: #333;
+  font-family: 'Open Sans';
+
+  a, a:focus, a:active {
+    position: absolute;
+    left: 20px;
+    width: 80%;
+    bottom: -40px;
+    bottom: -15px;
+    font-size: 12px;
+    color: black;
+    text-decoration: underline;
+  }
+}
