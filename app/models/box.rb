@@ -44,7 +44,6 @@ class Box < ApplicationRecord
     "#{time_left} hours !!"
   end
 
-  private
   def self.views(box)
     cpt = Opening.all.where("box_id=?",box.id).count
   end

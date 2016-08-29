@@ -28,4 +28,33 @@ class User < ApplicationRecord
 
     return user
   end
+
+  def openings_count
+    self.openings.count
+  end
+
+  def box_count
+    self.boxes.count
+  end
+
+  def own_boxes_openings_count
+    self.boxes.map { |box| box.openings.count }.inject(0,:+)
+  end
+
+  def average_rating
+    all_ratings = []
+    self.boxes.each do |box|
+      if box.openings.pluck(:rating).empty? == false
+        all_ratings << box.openings.pluck(:rating)
+      end
+    end
+    tabs = all_ratings.flatten.compact
+    all_ratings = tabs.inject(:+) / tabs.count
+    all_ratings
+  end
+
+  def meter
+    self.own_boxes_openings_count - self.openings_count + 10
+  end
+
 end

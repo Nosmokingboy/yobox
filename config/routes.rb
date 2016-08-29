@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :boxes, only: [:new, :create, :index, :show] do
     resources :openings, only: [:create]
   end
+  get 'stats', to: 'users#stats'
 end
