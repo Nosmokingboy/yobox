@@ -2,14 +2,14 @@
   <h2><%= box.title %></h2>
   <%= "Hello my name is"%> <%= box.user.first_name %> <%= box.user.last_name %><%= ","%>
   <br>
-  <%="and my box will be destroyed in"%> <%= box.time_left %>
+  <%="and this box will be destroyed in"%> <%= box.time_left %>
   <br>
   <br>
   <%= image_tag "#{box.user.facebook_picture_url}", class: "avatar-large"%>
   <br>
   <br>
   <div class="text-right">
-    <%= link_to "Let's get into that box", box_path(box) %>
+    <%= link_to "Let's get into that box", box_path(box), class: 'animsition-link' %>
   </div>
 </div>
 
