@@ -38,7 +38,7 @@ class User < ApplicationRecord
   end
 
   def own_boxes_openings_count
-    self.boxes.map { |box| box.openings.count }.reduce(:+)
+    self.boxes.map { |box| box.openings.count }.inject(0, :+)
   end
 
   def average_rating
@@ -47,9 +47,12 @@ class User < ApplicationRecord
       all_ratings << box.openings.pluck(:rating)
     end
     unless all_ratings.empty?
-      all_ratings.reduce(:+) / all_ratings.count
+      all_ratings.inject(0, :+) / all_ratings.count
     end
   end
 
+  def meter
+    self.own_boxes_openings_count - self.openings_count + 10
+  end
 
 end
