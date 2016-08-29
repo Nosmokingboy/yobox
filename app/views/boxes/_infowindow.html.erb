@@ -5,7 +5,18 @@
   <%="and this box will be destroyed in"%> <%= box.time_left %>
   <br>
   <br>
-  <%= image_tag "#{box.user.facebook_picture_url}", class: "avatar-large"%>
+
+  <div class="media">
+    <div class="media-left">
+      <%= image_tag"#{box.user.facebook_picture_url}", class: "avatar-large"%>
+    </div>
+    <div class="media-body">
+      <strong><%= box.user.first_name %> <%= box.user.last_name %></strong>
+      <%= render "users/average_rating", average_rating: box.user.average_rating %>
+    </div>
+  </div>
+
+
   <br>
   <br>
   <div class="text-right">

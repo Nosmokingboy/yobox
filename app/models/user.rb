@@ -50,9 +50,10 @@ class User < ApplicationRecord
     end
     tabs = all_ratings.flatten.compact
     if tabs.empty?
-      "Vous n'avez pas encore reçu de notes"
+      -1
     else
-      tabs.inject(:+) / tabs.count
+      result = tabs.inject(:+) / tabs.count
+      (result*2).round / 2.0
     end
   end
 
