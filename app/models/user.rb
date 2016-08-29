@@ -49,9 +49,22 @@ class User < ApplicationRecord
       end
     end
     tabs = all_ratings.flatten.compact
-    all_ratings = tabs.inject(:+) / tabs.count
-    all_ratings
+    if tabs.empty?
+      "Vous n'avez pas encore reçu de notes"
+    else
+      tabs.inject(:+) / tabs.count
+    end
   end
+
+  # def average_rating
+  #   self.boxes.each do |box|
+  #     if box.openings.pluck(:rating).empty? == false
+  #       all_ratings = box.openings.pluck(:rating).flatten.compact
+  #       all_ratings = all_ratings.inject(:+) / all_ratings.count
+  #       all_ratings
+  #     end
+  #   end
+  # end
 
   def meter
     self.own_boxes_openings_count - self.openings_count + 10
