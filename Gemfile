@@ -11,6 +11,8 @@ gem 'redis'
 gem 'iframely'
 gem 'rinku'
 gem 'geocoder'
+gem 'cloudinary', '1.1.0'
+gem 'carrierwave'
 
 
 gem 'faker'                           # ajout Anik pour le seed

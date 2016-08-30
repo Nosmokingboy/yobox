@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-
+  mount_uploader :facebook_picture_url, FacebookPictureUrlUploader
   has_many :boxes
   has_many :openings
 

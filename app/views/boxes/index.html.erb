@@ -4,7 +4,7 @@
     <% content_for(:after_js) do %>
 
     <script type="text/javascript">
-      var mapOptions = {zoom: 140};
+      var mapOptions = {zoom: 14};
       handler = Gmaps.build('Google');
       handler.buildMap({ provider: {mapOptions}, internal: {id: 'map'}}, function(){
           markers = handler.addMarkers(<%= raw @hash.to_json %>);
