@@ -1,41 +1,51 @@
 <div class="map-container">
   <div class="wrapper">
-
     <div id="map" style="width: 100%; height: 600px;"></div>
-
     <% content_for(:after_js) do %>
-      <script>
-        $(document).on('ready', function() {
 
-          navigator.geolocation.getCurrentPosition(function(location)
-          {
-            var $lat = location.coords.latitude;
-            var $lng = location.coords.longitude;
+    <script type="text/javascript">
+      var mapOptions = {zoom: 140};
+      handler = Gmaps.build('Google');
+      handler.buildMap({ provider: {mapOptions}, internal: {id: 'map'}}, function(){
+          markers = handler.addMarkers(<%= raw @hash.to_json %>);
+          handler.bounds.extendWith(markers);
+          handler.fitMapToBounds();
+      });
 
-            var mapOptions = {
-              center: new google.maps.LatLng($lat, $lng),
-              zoom: 15,
-              styles: [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
-            };
+      refreshPosition();
+      setInterval(function(){
+        console.log("send GPS to /refresh_position");
+        refreshPosition();
+      }, 10 * 10000) // 10*1000=prod sinon 10*10000
 
-            var handler = Gmaps.build('Google');
-            handler.buildMap( { provider: mapOptions, internal: { id: 'map' } }, function() {
+      function refreshPosition() {
+        // get GPS
+        navigator.geolocation.getCurrentPosition(function(location) {
+          var lat = location.coords.latitude;
+          var lng = location.coords.longitude;
+          // send GPS to /refresh_position
+          $.ajax({
+            type: "POST",
+            <% if Rails.env == "development" %>
+            url: "http://localhost:3000/refresh_position",
+            <% else %>
+            url: "http://yobox.herokuapp.com/refresh_position",
+            <% end %>
+            data: { lat: lat, lng: lng },
+            success: function(data){
+              console.log('- data received -')
+              handler.getMap().setZoom(1000);
               markers = handler.addMarkers(<%= raw @hash.to_json %>);
-            });
+              handler.bounds.extendWith(markers);
+              handler.fitMapToBounds();
+            }
+          });
+        });
+      }
 
-          }); <!-- fin du navigator.geolocation -->
+    </script>
 
-        }); <!-- fin du document.ready -->
-      </script>
     <% end %>
-
 
   </div> <!-- end wrapper -->
 </div> <!-- end map-container -->
-
-
-
-
-
-
-
