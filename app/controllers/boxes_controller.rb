@@ -1,15 +1,16 @@
 class BoxesController < ApplicationController
 
-  skip_before_action :authenticate_user!, only: [ :index ]
+  skip_before_action :authenticate_user!, only: [ :index, :preview ]
 
   def index
     # TODO: fix map build in index
-    @boxes = Box.all.near("38 place de la Bourse 33000", 5).openables
+    @boxes = Box.all.near("38 place de la Bourse 33000", 2).openables
 
     @hash = Gmaps4rails.build_markers(@boxes) do |box, marker|
       marker.lat box.latitude
       marker.lng box.longitude
-      marker.infowindow render_to_string(partial: "/boxes/infowindow", locals: { box: box })
+      marker.title box.id.to_s
+      # marker.infowindow render_to_string(partial: "/boxes/infowindow", locals: { box: box })
     end
   end
 
@@ -38,6 +39,11 @@ class BoxesController < ApplicationController
       @iframe = iframely.get_oembed_json(@box.first_url)["html"].html_safe
     end
     current_user.openings.create(box: @box)
+  end
+
+  def preview
+    @box = Box.find(params[:id])
+    render layout: false
   end
 
 private

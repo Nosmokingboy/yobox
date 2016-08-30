@@ -4,23 +4,43 @@
     <% content_for(:after_js) do %>
 
     <script type="text/javascript">
-      var mapOptions = {zoom: 140};
+      var mapOptions = {zoom: 1400};
       handler = Gmaps.build('Google');
       handler.buildMap({ provider: {mapOptions}, internal: {id: 'map'}}, function(){
-          markers = handler.addMarkers(<%= raw @hash.to_json %>);
-          handler.bounds.extendWith(markers);
-          handler.fitMapToBounds();
-      });
+        markers = handler.addMarkers(<%= raw @hash.to_json %>);
+
+        _.each(markers, function(marker){
+          google.maps.event.addListener(marker.getServiceObject(), 'click', function(){
+            var box_id = marker.serviceObject.title
+            // $.ajax({
+            //   method: "GET",
+            //   url:
+            // })
+            // $.get(expectedUrl)
+            //   .done(function(data){
+            //     var infowindow = new google.maps.InfoWindow({content: 'content' });
+            //     infowindow.open( handler.getMap(), marker.getServiceObject());
+            //   })
+          });
+        });
+
+
+        handler.bounds.extendWith(markers);
+        console.log("INITIAL>");
+        console.log(markers);
+        handler.fitMapToBounds();
+    });
 
       refreshPosition();
       setInterval(function(){
         console.log("send GPS to /refresh_position");
         refreshPosition();
-      }, 10 * 10000) // 10*1000=prod sinon 10*10000
+      }, 15 * 1000) // 10*1000=prod sinon 10*10000
 
       function refreshPosition() {
         // get GPS
         navigator.geolocation.getCurrentPosition(function(location) {
+          // 44.8425698, -0.5697464999999999
           var lat = location.coords.latitude;
           var lng = location.coords.longitude;
           // send GPS to /refresh_position
@@ -33,11 +53,28 @@
             <% end %>
             data: { lat: lat, lng: lng },
             success: function(data){
-              console.log('- data received -')
-              handler.getMap().setZoom(1000);
-              markers = handler.addMarkers(<%= raw @hash.to_json %>);
-              handler.bounds.extendWith(markers);
-              handler.fitMapToBounds();
+              console.log(data);
+              var mapOptions = {zoom: 1400};
+              handler = Gmaps.build('Google');
+              handler.buildMap({ provider: {mapOptions}, internal: {id: 'map'}}, function(){
+                markers = handler.addMarkers(data);
+                _.each(markers, function(marker){
+                  google.maps.event.addListener(marker.getServiceObject(), 'click', function(e, d){
+                    var box_id = marker.serviceObject.title
+                    $.ajax({
+                      method: "GET",
+                      url: "http://localhost:3000/boxes/" + box_id + "/preview",
+                      success: function(data) {
+                        var infowindow = new google.maps.InfoWindow({content: data});
+                        infowindow.open( handler.getMap(), marker.getServiceObject());
+                      }
+                    });
+                  });
+                });
+
+                handler.bounds.extendWith(markers);
+                handler.fitMapToBounds();
+              });
             }
           });
         });
