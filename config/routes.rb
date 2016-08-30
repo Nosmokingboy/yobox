@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root to: 'boxes#index'
+  get 'stats', to: 'users#stats'
+  post "/refresh_position" => "positions#update"
+
   devise_for :users,
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
@@ -7,5 +10,4 @@ Rails.application.routes.draw do
     resources :openings, only: [:create]
   end
 
-  post "/refresh_position" => "positions#update"
 end

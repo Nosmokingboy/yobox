@@ -13,13 +13,9 @@ class Box < ApplicationRecord
   scope :alive,   -> { where('expiration_date_time >= ?', DateTime.now) }
   scope :openables, -> { alive.map { |b| b if b.openings_max.nil? || views(b) < b.openings_max }.compact }
 
-  # def self.openables
-  #   Box.alive.map { |b| b if b.openings_max.nil? || views(b) < b.openings_max }.compact
-  # end
-  #
-  def can_be_openned_by?(user)
-    # get user position in session
-    # compare with self.distance_from([40.714,-100.234]) < 500
+  def is_unlockable?(latitude, longitude, limit_in_km)
+    d = Geocoder::Calculations.distance_between([latitude, longitude], [self.latitude, self.longitude])
+    d <= limit_in_km
   end
 
   def first_url
