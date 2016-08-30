@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :boxes, only: [:new, :create, :index, :show] do
     member do
-      get 'preview'
+      post 'preview'
     end
     resources :openings, only: [:create]
   end

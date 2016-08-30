@@ -42,7 +42,12 @@ class BoxesController < ApplicationController
   end
 
   def preview
+    latitude  = params[:lat]
+    longitude = params[:lng]
     @box = Box.find(params[:id])
+    @open = @box.is_unlockable?(latitude, longitude, 1)
+    puts "Box.is_unlockable? ->#{open}<-"
+    # params : gps du user
     render layout: false
   end
 

@@ -3,7 +3,7 @@ class PositionsController < ApplicationController
 
   def update
     session[:gps] = { lat: params[:lat] , lng: params[:lng] }
-    @boxes = Box.all.near([session[:gps][:lat], session[:gps][:lng]], 2).openables
+    @boxes = Box.all.near([session[:gps][:lat], session[:gps][:lng]], 1).openables
     @hash = Gmaps4rails.build_markers(@boxes) do |box, marker|
       marker.lat box.latitude
       marker.lng box.longitude
