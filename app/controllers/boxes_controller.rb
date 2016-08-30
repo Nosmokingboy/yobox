@@ -3,7 +3,7 @@ class BoxesController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index ]
 
   def index
-    # TODO: get GPS from user
+    # TODO: fix map build in index
     @boxes = Box.all.near("38 place de la Bourse 33000", 5).openables
 
     @hash = Gmaps4rails.build_markers(@boxes) do |box, marker|
