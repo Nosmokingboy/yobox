@@ -22,6 +22,11 @@ class Box < ApplicationRecord
     d <= limit_in_km
   end
 
+  def box_distance(latitude, longitude)
+    d = Geocoder::Calculations.distance_between([latitude, longitude], [self.latitude, self.longitude])
+  end
+
+
   def first_url
     url_regex = /https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w\.?=&-]*\/?/
     content.match(url_regex).to_s if content.match(url_regex)

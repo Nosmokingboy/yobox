@@ -4,8 +4,6 @@
   <br>
   <%="and this box will be destroyed in"%> <%= @box.time_left %>
   <br>
-  <br>
-
   <div class="media">
     <div class="media-left">
       <%= image_tag"#{@box.user.facebook_picture_url}", class: "avatar-large"%>
@@ -15,12 +13,12 @@
       <%= render "users/average_rating", average_rating: @box.user.average_rating %>
     </div>
   </div>
-
-
-  <br>
-  <br>
   <div class="text-right">
-    <%= @open %>
+  <% if (@open)==true %>
     <%= link_to "Let's get into that box", box_path(@box), class: 'animsition-link' %>
+  <% else %>
+    <div class="nope">Looks like you're not close enough...</div>
+    <div class="nope"><%= @distance.round(2).to_s %> kilometers to go!</div>
+  <% end %>
   </div>
 </div>
