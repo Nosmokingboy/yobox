@@ -5,7 +5,7 @@
   <% end %>
 
   <!-- Right Navigation -->
-  <div class="navbar-wagon-right hidden-xs hidden-sm">
+  <div class="navbar-wagon-right">
 
   <!-- Search form -->
   <!--  <form action="" class="navbar-wagon-search">
@@ -17,55 +17,60 @@
 
     <!-- Different navigation if login or not -->
     <% if user_signed_in? %>
-
       <!-- Notification -->
+      <!-- Button meter -->
+      <%= link_to stats_path, class: "btn-meter btn btn-meter-position" do %>
+        <%= current_user.meter %>
+      <% end %>
+      <div class="hidden-xs hidden-sm">
 
-      <!-- Profile picture and dropdown -->
-      <div class="navbar-wagon-item">
-        <div class="dropdown">
-           <% if current_user.facebook_picture_url %>
-            <%= image_tag current_user.facebook_picture_url, class: "avatar dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
-          <% else %>
-            <%= image_tag "http://www.pieglobal.com/wp-content/uploads/2015/10/placeholder-user.png", class: "avatar dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
-          <% end %>
-          <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
-            <li>
-              <%= link_to edit_user_registration_path do %>
-                <i class="fa fa-user"></i> <%= t(".profile", default: "Profile") %>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to "#" do %>
-                <i class="fa fa-home"></i>  <%= t(".profile", default: "Home") %>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to destroy_user_session_path, method: :delete do %>
-                <i class="fa fa-sign-out"></i>  <%= t(".sign_out", default: "Log out") %>
-              <% end %>
-            </li>
-          </ul>
+        <!-- Profile picture and dropdown -->
+        <div class="navbar-wagon-item">
+          <div class="dropdown">
+             <% if current_user.facebook_picture_url %>
+              <%= image_tag current_user.facebook_picture_url, class: "avatar-large avatar-bordered dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
+            <% else %>
+              <%= image_tag "http://www.pieglobal.com/wp-content/uploads/2015/10/placeholder-user.png", class: "avatar-large avatar-bordered dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
+            <% end %>
+            <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
+              <li>
+                <%= link_to edit_user_registration_path do %>
+                  <i class="fa fa-user"></i> <%= t(".profile", default: "Profile") %>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to "#" do %>
+                  <i class="fa fa-home"></i>  <%= t(".profile", default: "Home") %>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to destroy_user_session_path, method: :delete do %>
+                  <i class="fa fa-sign-out"></i>  <%= t(".sign_out", default: "Log out") %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-
     <% else %>
-
-      <!-- Login text link -->
-      <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-button btn" %>
-
+      <div class="hidden-xs hidden-sm">
+        <!-- Login text link -->
+        <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-button btn" %>
+      </div>
     <% end %>
-
-    <!-- Button (call-to-action) -->
-    <%= link_to t(".top_call_to_action", default: "Create a box"), new_box_path, class: "navbar-wagon-button navbar-wagon-button:hover " %>
+    <div class="hidden-xs hidden-sm">
+      <%= link_to t(".top_call_to_action", default: "Create a box"), new_box_path, class: "btn btn-plus navbar-wagon-button:hover " %>
+    </div>
   </div>
 
   <!-- Dropdown list appearing on mobile only -->
   <div class="navbar-wagon-item hidden-md hidden-lg">
     <div class="dropdown">
-      <i class="fa fa-bars dropdown-toggle" data-toggle="dropdown"></i>
+      <i class="fa fa-bars dropdown-toggle burger" data-toggle="dropdown"></i>
       <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
         <li><%= link_to t(".top_call_to_action", default: "Create a box"), new_box_path %></li>
         <% if user_signed_in? %>
+        <li><%= link_to "Edit stats", stats_path %></li>
         <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
         <li><%= link_to "Log out", destroy_user_session_path, method: :delete  %></li>
         <% else %>
