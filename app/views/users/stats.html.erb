@@ -1,19 +1,79 @@
-<p>Welcoming gift<p>
-<p>+7<p>
-<br>
-<p>user.openings_count<p>
--<%= @user.openings_count %>
-<br>
-<p>user.box_count<p>
-+<%= @user.box_count %>
-<br>
-<p>user.own_boxes_openings_count<p>
-+<%= @user.own_boxes_openings_count %>/10
-<br>
-<p>user.average_rating<p>
-<%= @user.average_rating %>
-<br>
-<p>user.meter<p>
-<%= @user.meter %>
-<br>
-<h2>Ici et là<h2>
+
+  <div class="container">
+    <h1 class="text-center" style="color: #0037ff">My stats</h1>
+    <br>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        <div class="card" style="opacity: 1">
+          <div class="card-category">Balance
+          </div>
+          <div class="card-description">
+            <h2><%= @user.meter %></h2>
+            <p>My rights to open boxes (my life as a creator minus my life as a viewer)</p>
+          </div>
+          <%= image_tag "logo.png", class:"card-user avatar-large" %>
+          <a class="card-link" href="#" ></a>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div class="card" style=" ">
+          <div class="card-category">Welcoming gift
+          </div>
+          <div class="card-description">
+            <h2>+ 10</h2>
+            <p>10 shows for your first tries</p>
+          </div>
+          <%= image_tag "logo.png", class:"card-user avatar-large" %>
+          <a class="card-link" href="#" ></a>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div class="card" style="">
+          <div class="card-category">My creations
+          </div>
+          <div class="card-description">
+            <h2><%= @user.box_count %></h2>
+            <p>Number of boxes you have created</p>
+          </div>
+          <%= image_tag "logo.png", class:"card-user avatar-large" %>
+          <a class="card-link" href="#" ></a>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div class="card" style="">
+          <div class="card-category">My boxes trafic
+          </div>
+          <div class="card-description">
+            <h2><%= @user.own_boxes_openings_count %></h2>
+            <p>Number of openings on your own boxes (10 openings on your own boxes give you 10 openings as a viewer)</p>
+          </div>
+          <%= image_tag "logo.png", class:"card-user avatar-large" %>
+          <a class="card-link" href="#" ></a>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div class="card" style="">
+          <div class="card-category">My global rating
+          </div>
+          <div class="card-description">
+            <h2><%= @user.average_rating %></h2>
+            <p>Average rating on your boxes</p>
+          </div>
+          <%= image_tag "logo.png", class:"card-user avatar-large" %>
+          <a class="card-link" href="#" ></a>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div class="card" style="">
+          <div class="card-category">My count of views
+          </div>
+          <div class="card-description">
+            <h2><%= @user.openings_count %></h2>
+            <p>Number of boxes you have opened</p>
+          </div>
+          <%= image_tag "logo.png", class:"card-user avatar-large" %>
+          <a class="card-link" href="#" ></a>
+        </div>
+      </div>
+    </div>
+  </div>

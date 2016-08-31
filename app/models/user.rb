@@ -68,7 +68,7 @@ class User < ApplicationRecord
   # end
 
   def meter
-    7 + (self.boxes.count * 2) + (self.own_boxes_openings_count / 10) - self.openings_count
+    10 + (self.boxes.count * 2) + (self.own_boxes_openings_count / 10) - self.openings_count
   end
 
 end
