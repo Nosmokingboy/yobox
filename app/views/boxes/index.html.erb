@@ -15,7 +15,7 @@
         <% if Rails.env == "development" %>
         url: "http://localhost:3000/refresh_position",
         <% else %>
-        url: "http://yobox.herokuapp.com/refresh_position",
+        url: "https://yobox.herokuapp.com/refresh_position",
         <% end %>
         data: { lat: lat, lng: lng },
         success: function(data){
@@ -49,7 +49,7 @@
                 }
                 $.ajax({
                   method: "POST",
-                  url: "http://localhost:3000/boxes/" + box_id + "/preview",
+                  url: "https://localhost:3000/boxes/" + box_id + "/preview",
                   data: { "lat": lat, "lng": lng },
                   success: function(data) {
                     infowindow = new google.maps.InfoWindow({content: data});

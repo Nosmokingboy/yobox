@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
 
-  resources :boxes, only: [:new, :create, :index, :show] do
+  resources :boxes, only: [:new, :create, :show] do
     member do
       post 'preview'
     end
