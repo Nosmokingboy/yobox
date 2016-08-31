@@ -18,7 +18,7 @@
     </div>
   </div>
   <div class="text-right">
-  <% if (@open)==true %>
+  <% if (@open) %>
     <%= link_to "Let's get into that box", box_path(@box), class: 'animsition-link' %>
   <% else %>
     <div class="nope">Looks like you're not close enough...</div>

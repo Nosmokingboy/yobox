@@ -7,9 +7,14 @@
   <div class="iframe">
     <%= @iframe %>
   </div>
-  <div class="box-content">
-    <%= Rinku.auto_link(@box.content, :all, 'target="_blank"').html_safe %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box-content">
+        <%= Rinku.auto_link(@box.content, :all, 'target="_blank"').html_safe %>
+      </div>
+      <%= link_to "Go back to Map", root_path, class: "btn btn-primary btn-lg btn-block" %>
+      <%= link_to "Inappropriate", report_path, class: "btn btn-danger btn-lg btn-block button-map" %>
+    </div>
   </div>
-  <%= link_to "Go back to Map", boxes_path, class: "btn btn-primary btn-lg btn-block button-map" %>
 </div>
 
