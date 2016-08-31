@@ -12,7 +12,6 @@ class PositionsController < ApplicationController
        "url" => "http://nouveau.tanas.net/box.png",
        "width" =>  32,
        "height" => 32})
-      # marker.infowindow render_to_string(:partial => "/boxes/infowindow", locals: { box: box})
     end
     render json: @hash.to_json
   end
