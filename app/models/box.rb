@@ -10,12 +10,20 @@ class Box < ApplicationRecord
 
   scope :limited, -> { where.not(openings_max: nil) }
   scope :nolimit, -> { where(openings_max: nil) }
-  scope :alive,   -> { where('expiration_date_time >= ?', DateTime.now) }
-  scope :openables, -> { alive.map { |b| b if b.openings_max.nil? || views(b) < b.openings_max }.compact }
+  scope :alive,   -> { includes(:openings).where('expiration_date_time >= ?', DateTime.now).references(:openings) }
+  scope :once,    -> { includes(:openings).where("openings_max < (SELECT COUNT(*) FROM openings WHERE box_id = boxes.id)").references(:openings) }
+  scope :openables, -> { alive.or(once) }
+
+  # scope :openables, -> { alive.map { |b| b if b.openings_max.nil? || views(b) < b.openings_max }.compact }
+  # scope :openables, -> { includes(:openings).alive.where("openings_max IS NULL OR openings_max > ") }
 
   def is_unlockable?(latitude, longitude, limit_in_km)
     d = Geocoder::Calculations.distance_between([latitude, longitude], [self.latitude, self.longitude])
     d <= limit_in_km
+  end
+
+  def box_distance(latitude, longitude)
+    d = Geocoder::Calculations.distance_between([latitude, longitude], [self.latitude, self.longitude])
   end
 
   def first_url
@@ -41,7 +49,7 @@ class Box < ApplicationRecord
   end
 
   def self.views(box)
-    cpt = Opening.all.where("box_id=?",box.id).count
+    Opening.all.where("box_id=?",box.id).count
   end
 
 end

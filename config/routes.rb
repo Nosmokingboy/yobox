@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   resources :boxes, only: [:new, :create, :index, :show] do
+    member do
+      post 'preview'
+    end
     resources :openings, only: [:create]
   end
 
