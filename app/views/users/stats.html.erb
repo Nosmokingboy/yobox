@@ -17,3 +17,44 @@
 <%= @user.meter %>
 <br>
 <h2>Ici et là<h2>
+
+ <div class="wrapper-grey padded">
+      <div class="container">
+        <h2 class="text-center">My stats</h2>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            <div class="card" style=" ">
+              <div class="card-category">Welcoming gift</div>
+              <div class="card-description">
+                <h2>+ 10</h2>
+                <p>10 shows for your first tries</p>
+              </div>
+              <img class="card-user avatar avatar-large" src="logo.png">
+              <a class="card-link" href="#" ></a>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="card" style="">
+              <div class="card-category">My creations</div>
+              <div class="card-description">
+                <h2><%= @user.box_count %></h2>
+                <p>Number of boxes you have created</p>
+              </div>
+              <img class="card-user avatar avatar-large" src="logo.png">
+              <a class="card-link" href="#" ></a>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="card" style="">
+              <div class="card-category">My success</div>
+              <div class="card-description">
+                <h2><%= @user.own_boxes_openings_count %>/</h2>
+                <p>Number of openings of your own boxes</p>
+              </div>
+              <img class="card-user avatar avatar-large" src="logo.png">
+              <a class="card-link" href="#" ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
