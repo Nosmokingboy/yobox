@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'boxes#index'
   get 'stats', to: 'users#stats'
+  get 'report', to: 'boxes#report'
   post "/refresh_position" => "positions#update"
 
   devise_for :users,
