@@ -14,9 +14,6 @@ class Box < ApplicationRecord
   scope :once,    -> { includes(:openings).where("openings_max < (SELECT COUNT(*) FROM openings WHERE box_id = boxes.id)").references(:openings) }
   scope :openables, -> { alive.or(once) }
 
-  # scope :openables, -> { alive.map { |b| b if b.openings_max.nil? || views(b) < b.openings_max }.compact }
-  # scope :openables, -> { includes(:openings).alive.where("openings_max IS NULL OR openings_max > ") }
-
   def is_unlockable?(latitude, longitude, limit_in_km)
     d = Geocoder::Calculations.distance_between([latitude, longitude], [self.latitude, self.longitude])
     d <= limit_in_km
@@ -45,7 +42,6 @@ class Box < ApplicationRecord
 
   def time_left
     time_left = ((self.expiration_date_time - DateTime.now) / 60 / 60).round
-    "#{time_left} hours !!"
   end
 
   def self.views(box)
