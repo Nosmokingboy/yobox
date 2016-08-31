@@ -9,6 +9,7 @@
       var lng = location.coords.longitude;
       console.log("lat..." + lat);
       console.log("lng..." + lng);
+      var infowindow = null;
       $.ajax({
         type: "POST",
         <% if Rails.env == "development" %>
@@ -33,8 +34,8 @@
 
             // TO DO : debugger l'affichage du cercle (lng+lat+radius:ok mais params:?)
             // ------------------
-            circle = ({ lng: lng, lat: lat, radius: 1000, strokeColor: "#FFFFFF", strokeOpacity: 100, fillColor: "#32cd32", fillOpacity: 100 }); // 1000=radius in m
-            handler.addCircle(circle);
+            // circle = ({ lng: lng, lat: lat, radius: 1000, strokeColor: "#FFFFFF", strokeOpacity: 100, fillColor: "#32cd32", fillOpacity: 100 }); // 1000=radius in m
+            // handler.addCircle(circle);
             // ------------------
 
             markers = handler.addMarkers(markers_data);
@@ -42,19 +43,19 @@
             _.each(markers, function(marker){
               google.maps.event.addListener(marker.getServiceObject(), 'click', function(){
                 var box_id = marker.serviceObject.title;
-                navigator.geolocation.getCurrentPosition(function(location) {
-                  // 44.8425698, -0.5697464999999999
-                  var lat = location.coords.latitude;
-                  var lng = location.coords.longitude;
-                  $.ajax({
-                    method: "POST",
-                    url: "http://localhost:3000/boxes/" + box_id + "/preview",
-                    data: { "lat": lat, "lng": lng },
-                    success: function(data) {
-                      var infowindow = new google.maps.InfoWindow({content: data});
-                      infowindow.open( handler.getMap(), marker.getServiceObject());
-                    }
-                  });
+                // 44.8425698, -0.5697464999999999
+                if (infowindow) {
+                  infowindow.close();
+                }
+                $.ajax({
+                  method: "POST",
+                  url: "http://localhost:3000/boxes/" + box_id + "/preview",
+                  data: { "lat": lat, "lng": lng },
+                  success: function(data) {
+                    infowindow = new google.maps.InfoWindow({content: data});
+                    infowindow.open( handler.getMap(), marker.getServiceObject());
+                    countdown()
+                  }
                 });
               });
             });
@@ -63,6 +64,7 @@
             console.log(markers);
             handler.fitMapToBounds(); // force zoom among boxes
             handler.getMap().setZoom(15);
+            handler.getMap().setCenter({lat: lat, lng: lng});
           });
         }
       });
