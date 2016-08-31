@@ -21,35 +21,42 @@
         success: function(data){
           console.log("Data recue : " + data);
 
-          // TO DO : debugger l'affichage des options (qui ne s'affichent pas)
           // ------------------
-          var mapOptions = {styles: [{"featureType":"administrative","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#519c2f"},{"gamma":"1.27"}]},{"featureType":"poi.park","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#e4bd2e"},{"weight":"3.14"},{"gamma":"1.58"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"weight":"0.38"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#f28a17"}]},{"featureType":"transit.station.airport","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"geometry.fill","stylers":[{"color":"#f4c902"},{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"labels.text.fill","stylers":[{"color":"#a11212"},{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"labels.text.stroke","stylers":[{"color":"#ff7676"},{"weight":"0.69"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#13646e"}]}]};
-          // ------------------
+          var styles = [{"featureType":"administrative","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#519c2f"},{"gamma":"1.27"}]},{"featureType":"poi.park","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#e4bd2e"},{"weight":"3.14"},{"gamma":"1.58"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"weight":"0.38"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#f28a17"}]},{"featureType":"transit.station.airport","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"geometry.fill","stylers":[{"color":"#f4c902"},{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"labels.text.fill","stylers":[{"color":"#a11212"},{"visibility":"on"}]},{"featureType":"transit.station.airport","elementType":"labels.text.stroke","stylers":[{"color":"#ff7676"},{"weight":"0.69"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#13646e"}]}];
+          var mapOptions = {
+            styles: styles
+          };
 
           handler = Gmaps.build('Google');
-          handler.buildMap({ provider: {mapOptions}, internal: {id: 'map'}}, function(){
+          handler.buildMap({ provider: mapOptions, internal: {id: 'map'}}, function(){
             markers_data = data;
             console.log("markers = " + markers_data);
             console.log("lat..." + lat + " lng..." + lng);
 
-            // TO DO : debugger l'affichage du cercle (lng+lat+radius:ok mais params:?)
-            // ------------------
-            // circle = ({ lng: lng, lat: lat, radius: 1000, strokeColor: "#FFFFFF", strokeOpacity: 100, fillColor: "#32cd32", fillOpacity: 100 }); // 1000=radius in m
-            // handler.addCircle(circle);
-            // ------------------
+            circleOptions = new google.maps.Circle ({
+              center: {lat: lat, lng: lng},
+              radius: 300,
+              fillColor: "#32cd32",
+              fillOpacity: 0.2,
+              strokeOpacity: 0,
+              map: handler.getMap()
+            }); // radius in meters
 
             markers = handler.addMarkers(markers_data);
 
             _.each(markers, function(marker){
               google.maps.event.addListener(marker.getServiceObject(), 'click', function(){
                 var box_id = marker.serviceObject.title;
-                // 44.8425698, -0.5697464999999999
                 if (infowindow) {
                   infowindow.close();
                 }
                 $.ajax({
                   method: "POST",
-                  url: "https://localhost:3000/boxes/" + box_id + "/preview",
+                  <% if Rails.env == "development" %>
+                  url: "http://localhost:3000/boxes/" + box_id + "/preview",
+                  <% else %>
+                  url: "https://yobox.herokuapp.com/boxes/" + box_id + "/preview",
+                  <% end %>
                   data: { "lat": lat, "lng": lng },
                   success: function(data) {
                     infowindow = new google.maps.InfoWindow({content: data});
@@ -69,34 +76,6 @@
         }
       });
     });
-
-      // refreshPosition();
-      // setInterval(function(){
-      //   console.log("send GPS to /refresh_position");
-      //   refreshPosition();
-      // }, 15 * 1000) // 10*1000=prod sinon 10*10000
-
-      // function refreshPosition() {
-      //   // get GPS
-      //   navigator.geolocation.getCurrentPosition(function(location) {
-      //     // 44.8425698, -0.5697464999999999
-      //     var lat = location.coords.latitude;
-      //     var lng = location.coords.longitude;
-      //     // send GPS to /refresh_position
-      //     $.ajax({
-      //       type: "POST",
-      //       <% if Rails.env == "development" %>
-      //       url: "http://localhost:3000/refresh_position",
-      //       <% else %>
-      //       url: "http://yobox.herokuapp.com/refresh_position",
-      //       <% end %>
-      //       data: { lat: lat, lng: lng },
-      //       success: function(new_markers_data){
-      //         updateMarkers(handler, new_markers_data, markers_data);
-      //       }
-      //     });
-      //   });
-      // }
 
     </script>
 
