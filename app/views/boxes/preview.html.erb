@@ -1,7 +1,13 @@
 <div class="preview-box">
   <h2><%= @box.title %></h2>
-    <p>Hi, I am <%= @box.user.first_name %> <%= @box.user.last_name %>, <br>
-    and my box will be destroyed in <%= @box.time_left.to_s %> hours!   </p>
+    <!-- <p>Hi, I am <%= @box.user.first_name %> <%= @box.user.last_name %>, <br>
+    and my box will be destroyed in <%= @box.time_left %> hours!   </p> -->
+  <div class="container-fluid text-center">
+    <strong><p> THIS BOX WILL BE DESTROYED IN : </p></strong>
+      <div class="countdown" data-timer="<%= @box.time_left * 60 %>">
+        <div class="tiles"></div>
+      </div>
+  </div>
   <div class="media">
     <div class="media-left">
       <%= image_tag"#{@box.user.facebook_picture_url}", class: "avatar-large"%>
