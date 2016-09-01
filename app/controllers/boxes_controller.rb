@@ -28,7 +28,7 @@ class BoxesController < ApplicationController
     else
       @iframe = iframely.get_oembed_json(@box.first_url)["html"].html_safe
     end
-    current_user.openings.create(box: @box)
+    @opening = current_user.openings.create(box: @box)
   end
 
   def preview
