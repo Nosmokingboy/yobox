@@ -30,7 +30,7 @@
              <% if current_user.facebook_picture_url %>
               <%= image_tag current_user.facebook_picture_url, class: "avatar-large avatar-bordered dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
             <% else %>
-              <%= image_tag "http://www.pieglobal.com/wp-content/uploads/2015/10/placeholder-user.png", class: "avatar-large avatar-bordered dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
+              <%= image_tag "placeholder-user.png", class: "avatar-large avatar-bordered dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
             <% end %>
             <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
               <li><%= link_to stats_path do%>
