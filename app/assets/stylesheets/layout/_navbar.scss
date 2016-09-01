@@ -51,9 +51,9 @@
 .btn-plus {
   margin-left: 10px;
   height: 40px;
-  padding: 0 20px;
-  border-radius: 5%;
-  line-height: 40px;
+  padding: 10px;
+  border-radius: 10px;
+  line-height: 17px;
   text-align: center;
   background-color: #1993DA;
   border: 2px solid #1993DA;
@@ -61,6 +61,7 @@
 }
 .btn-plus:hover {
   background-color: #516bff;
+  border: 2px solid #516bff;
   color: white;
 }
 
@@ -74,16 +75,16 @@
 }
 .btn-meter {
   margin-left: 10px;
-  padding: 0 20px;
-  border-radius: 15%;
+  padding: 10px;
+  border-radius: 10px;
   height: 40px;
-  line-height: 35px;
+  line-height: 17px;
   background-color: white;
   color: #1993DA;
   font-size: 22px;
   font-weight: bold;
   border: 2px solid #1993DA;
-   @media screen and (max-width: 990px) { height: 30px; line-height: 25px; font-size: 16px;}
+   @media screen and (max-width: 990px) { height: 30px; line-height: 5px; font-size: 16px;}
 }
 .btn-meter:hover {
   color: #7161ef;

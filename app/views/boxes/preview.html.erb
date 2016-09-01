@@ -19,7 +19,7 @@
   </div>
   <div class="text-right">
   <% if (@open) %>
-    <strong><%= link_to "OPEN IT !", box_path(@box), class: 'animsition-link' %></strong>
+    <div class= "btn btn-plus"><%= link_to "OPEN IT !", box_path(@box), class: 'open-it' %></div>
   <% else %>
     <div class="nope">Looks like you're not close enough...</div>
     <div class="nope"><%= @distance.round(2).to_s %> kilometers to go!</div>
