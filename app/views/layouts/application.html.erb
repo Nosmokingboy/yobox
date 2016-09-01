@@ -11,7 +11,7 @@
   <body class="animsition-overlay">
     <%= render 'shared/navbar' %>
     <%= render 'shared/flashes' %>
-  <div style="padding:15px">
+
     <%= yield %>
 
     <%= javascript_include_tag "https://maps.google.com/maps/api/js?key=#{ENV['GOOGLE_API_BROWSER_KEY']}" %>
@@ -20,6 +20,6 @@
     <%= javascript_include_tag "https://cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js" %>
     <%= javascript_include_tag 'application' %>
     <%= yield(:after_js) %>
-  </div>
+
   </body>
 </html>

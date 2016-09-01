@@ -1,10 +1,20 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-
 //= require underscore
 //= require gmaps/google
 //= require_tree .
+
+
+$('document').ready(function() {
+  $( ".star-cb-group > input" ).click(function() {
+    $(".star-cb-group > input").prop("checked", false);
+    $(this).prop("checked", true);
+    $(this).closest('form').submit();
+  });
+});
+
+
 
 (function() {
   /* __markers will hold a reference to all markers currently shown
