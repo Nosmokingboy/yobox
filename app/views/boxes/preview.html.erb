@@ -10,7 +10,7 @@
   </div>
   <div class="media">
     <div class="media-left">
-      <%= image_tag"#{@box.user.facebook_picture_url}", class: "avatar-large"%>
+      <%= cl_image_tag"#{@box.user.picture.path}", class: "avatar-large"%>
     </div>
     <div class="media-body">
       <strong><%= @box.user.first_name %> <%= @box.user.last_name %></strong>
