@@ -9,7 +9,7 @@ class PositionsController < ApplicationController
       marker.lng box.longitude
       marker.title box.id.to_s
       marker.picture({
-       "url" => "http://nouveau.tanas.net/box.png",
+       "url" => "http://i.imgur.com/xAAsxZ9.png",
        "width" =>  32,
        "height" => 32})
     end
