@@ -1,50 +1,65 @@
-$font-size: 20px; // <-- Adjust this only!
-$star-width: 1.5em;
+$unchecked-star: '\2606';
+$unchecked-color: #BFBFBF;
+$checked-star: '\2605';
+$checked-color: #FFBC42;
 
-.rating {
-  margin: 10px 0;
+.star-cb {
+  width: 280px;
+  margin: auto;
 }
 
-.rating i {
-  display: inline-block;
-  width: 0;
-  height: $star-width;
-  border-width: 0 ( $star-width / 2 );
-  border-style: solid;
-  border-color: #eee;
-  border-radius: .22em;
-  color: white;
-  background: #eee;
-  font-style: normal;
-  line-height: $star-width + 0.1em;
-  text-indent: -0.5em;
-  text-shadow: 1px 0 1px hsl(0, 0%, 70%);
-}
-
-
-/** Colors */
-
-@function stars-color($num) {
-  $colors: #cc8b1f #dcb228 #f0991e #f26a2c #dd050b;
-  @return if($num <= length($colors), nth($colors, $num), #333);
-}
-
-@for $i from 1 to 5 {
-  @for $j from 1 through $i {
-    [data-rating^='#{$i}'] .star-#{$j} {
-      border-color: stars-color($i);
-      // set background to avoid tiny lines between borders in print.
-      background: stars-color($i);
+.star-cb-group {
+  /* remove inline-block whitespace */
+  font-size: 0;
+  * {
+    font-size: 5.5rem;
+  }
+  /* flip the order so we can use the + and ~ combinators */
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  & > input {
+    display: none;
+    & + label {
+      /* only enough room for the star */
+      display: inline-block;
+      overflow: hidden;
+      text-indent: 9999px;
+      width: 1em;
+      white-space: nowrap;
+      cursor: pointer;
+      &:before {
+        display: inline-block;
+        text-indent: -9999px;
+        content: $unchecked-star;
+        color: $unchecked-color;
+      }
+    }
+    &:checked ~ label:before,
+      & + label:hover ~ label:before,
+      & + label:hover:before {
+      content: $checked-star;
+      color: #e52;
     }
   }
-  [data-rating^='#{$i}.5'] .star-#{$i+1} {
-    border-left-color: stars-color($i);
+
+  /* the hidden clearer */
+  & > .star-cb-clear + label {
+    text-indent: -9999px;
+    width: .5em;
+    margin-left: -.5em;
+  }
+  & > .star-cb-clear + label:before {
+    width: .5em;
+  }
+
+  &:hover > input + label:before {
+    content: $unchecked-star;
+    color: $unchecked-color;
+    text-shadow: none;
+  }
+  &:hover > input + label:hover ~ label:before,
+  &:hover > input + label:hover:before {
+    content: $checked-star;
+    color: $checked-color;
   }
 }
-
-[data-rating="5"] i {
-  $color: stars-color(5);
-  background: $color;
-  border-color: $color;
-}
-

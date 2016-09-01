@@ -1,4 +1,4 @@
-<div class="fluid-container">
+<div class="fluid-container general-padding">
   <div class="item-title">
     <h1>
       <%= @box.title %>
@@ -8,9 +8,31 @@
     <%= @iframe %>
   </div>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-md-12 ">
       <div class="box-content">
         <%= Rinku.auto_link(@box.content, :all, 'target="_blank"').html_safe %>
+      </div>
+      <div class="inline-block form-inline">
+        <div id="rate-form">
+          <%= simple_form_for(@opening, remote: true) do |f| %>
+            <fieldset class="star-cb">
+              <span class="star-cb-group">
+                <input type="radio" id="<%= @opening.id%>-rating-5" name="opening[rating]" value="5" />
+                <label for="<%= @opening.id%>-rating-5">5</label>
+                <input type="radio" id="<%= @opening.id%>-rating-4" name="opening[rating]" value="4" />
+                <label for="<%= @opening.id%>-rating-4">4</label>
+                <input type="radio" id="<%= @opening.id%>-rating-3" name="opening[rating]" value="3" />
+                <label for="<%= @opening.id%>-rating-3">3</label>
+                <input type="radio" id="<%= @opening.id%>-rating-2" name="opening[rating]" value="2" />
+                <label for="<%= @opening.id%>-rating-2">2</label>
+                <input type="radio" id="<%= @opening.id%>-rating-1" name="opening[rating]" value="1" />
+                <label for="<%= @opening.id%>-rating-1">1</label>
+                <input type="radio" id="<%= @opening.id%>-rating-0" name="opening[rating]" value="0" class="star-cb-clear" />
+                <label for="<%= @opening.id%>-rating-0">0</label>
+              </span>
+            </fieldset>
+          <% end %>
+        </div>
       </div>
       <%= link_to "Go back to Map", root_path, class: "btn btn-primary btn-lg btn-block" %>
       <%= link_to "REPORT", report_path, class: "btn btn-danger btn-lg btn-block" %>
