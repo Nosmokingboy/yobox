@@ -68,7 +68,16 @@ class User < ApplicationRecord
   # end
 
   def meter
-    10 + (self.boxes.count * 2) + (self.own_boxes_openings_count / 10) - self.openings_count
+    count = 40 + (self.boxes.count * 2) + (self.own_boxes_openings_count / 10) - self.openings_count
+      if count >= 0
+        count
+      else
+        count = 0
+        count
+    end
   end
 
+  def has_sufficient_credit?
+    meter == 0 ? false : true
+  end
 end

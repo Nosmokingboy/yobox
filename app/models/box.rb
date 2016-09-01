@@ -14,9 +14,8 @@ class Box < ApplicationRecord
   scope :once,    -> { includes(:openings).where("openings_max < (SELECT COUNT(*) FROM openings WHERE box_id = boxes.id)").references(:openings) }
   scope :openables, -> { alive.or(once) }
 
-  def is_unlockable?(latitude, longitude, limit_in_km)
-    d = Geocoder::Calculations.distance_between([latitude, longitude], [self.latitude, self.longitude])
-    d <= limit_in_km
+  def is_unlockable?(latitude, longitude, limit_in_km, user)
+    is_within_reach?(latitude, longitude, limit_in_km) && user.has_sufficient_credit?
   end
 
   def box_distance(latitude, longitude)
@@ -48,4 +47,8 @@ class Box < ApplicationRecord
     Opening.all.where("box_id=?",box.id).count
   end
 
+  def is_within_reach?(latitude, longitude, limit_in_km)
+    d = Geocoder::Calculations.distance_between([latitude, longitude], [self.latitude, self.longitude])
+    d <= limit_in_km
+  end
 end

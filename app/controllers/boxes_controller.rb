@@ -32,11 +32,11 @@ class BoxesController < ApplicationController
   end
 
   def preview
-    latitude  = params[:lat]
-    longitude = params[:lng]
+    @limit_in_km = 0.3
+    @latitude  = params[:lat]
+    @longitude = params[:lng]
     @box = Box.find(params[:id])
-    @open = @box.is_unlockable?(latitude, longitude, 0.3) # radius in km
-    @distance = @box.box_distance(latitude, longitude)
+    @distance = @box.box_distance(@latitude, @longitude)
     render layout: false
   end
 
