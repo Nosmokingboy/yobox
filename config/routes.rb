@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'report', to: 'boxes#report'
   post "/refresh_position" => "positions#update"
   patch 'rating', to: 'box#opening'
-  get 'about' => "pages#about"
+  get 'about', to: "pages#about"
 
   devise_for :users,
     controllers: {
