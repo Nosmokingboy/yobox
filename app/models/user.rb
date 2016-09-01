@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  mount_uploader :facebook_picture_url, FacebookPictureUrlUploader
+  mount_uploader :picture, PictureUploader
   has_many :boxes
   has_many :openings
 
@@ -10,9 +10,9 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:facebook]
 
   def self.find_for_facebook_oauth(auth)
-    user_params = auth.to_h.slice(:provider, :uid)
+    user_params = auth.to_h.slice("provider", "uid")
     user_params.merge! auth.info.slice(:email, :first_name, :last_name)
-    user_params[:facebook_picture_url] = auth.info.image
+    user_params[:remote_picture_url] = auth.info.image
     user_params[:token] = auth.credentials.token
     user_params[:token_expiry] = Time.at(auth.credentials.expires_at)
 
