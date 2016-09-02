@@ -15,7 +15,7 @@
         <% if Rails.env == "development" %>
         url: "http://localhost:3000/refresh_position",
         <% else %>
-        url: "https://yobox.herokuapp.com/refresh_position",
+        url: "https://youmanbox.herokuapp.com/refresh_position",
         <% end %>
         data: { lat: lat, lng: lng },
         success: function(data){
@@ -55,7 +55,7 @@
                   <% if Rails.env == "development" %>
                   url: "http://localhost:3000/boxes/" + box_id + "/preview",
                   <% else %>
-                  url: "https://yobox.herokuapp.com/boxes/" + box_id + "/preview",
+                  url: "https://youmanbox.herokuapp.com/boxes/" + box_id + "/preview",
                   <% end %>
                   data: { "lat": lat, "lng": lng },
                   success: function(data) {
