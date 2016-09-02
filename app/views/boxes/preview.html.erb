@@ -30,7 +30,7 @@
           <div class="btn btn-primary btn-status text-center">You have to create boxes
           </div>
       <% elsif !@box.is_within_reach?(@latitude, @longitude, @limit_in_km) %>
-        <div class="btn btn-primary btn-status text-center"><%= @distance.round(2).to_s %>km further away
+        <div class="btn btn-primary btn-status text-center"><%= @distance.round(2).to_s %>km away
         </div>
       <% end %>
     <% else %>
