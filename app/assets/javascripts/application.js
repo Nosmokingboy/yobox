@@ -3,6 +3,7 @@
 //= require bootstrap-sprockets
 //= require underscore
 //= require gmaps/google
+//= require moment
 //= require_tree .
 
 

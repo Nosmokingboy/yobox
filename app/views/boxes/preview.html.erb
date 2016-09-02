@@ -1,49 +1,46 @@
-
-    <!-- <p>Hi, I am <%= @box.user.first_name %> <%= @box.user.last_name %>, <br>
-    and my box will be destroyed in <%= @box.time_left %> hours!   </p> -->
-  <div class="container-fluid">
-    <h3><strong><%= @box.title.upcase %><strong></h3>
-    <div class="userbox">
-      <div class="media">
-        <div class="media-left">
-          <div class="media-object">
-            <% if @box.user.picture.present? %>
-              <%= image_tag @box.user.picture, class: "avatar-large avatar-bordered" %>
-            <% else %>
-              <%= image_tag "placeholder-user.png", class: "avatar-large avatar-bordered" %>
-            <% end %>
-          </div>
-          <div class='user-name'>
+<div class="container-fluid" id="countdown-<%= @box.id %>">
+  <h3><strong><%= @box.title.upcase %></strong></h3>
+  <div class="userbox">
+    <div class="media">
+      <div class="media-left">
+        <div class="media-object">
+          <% if @box.user.picture.present? %>
+            <%= image_tag @box.user.picture, class: "avatar-large avatar-bordered" %>
+          <% else %>
+            <%= image_tag "placeholder-user.png", class: "avatar-large avatar-bordered" %>
+          <% end %>
+        </div>
+        <div class='user-name'>
           <strong><%= @box.user.first_name %> <%= @box.user.last_name %></strong>
           <%= render "users/average_rating", average_rating: @box.user.average_rating %>
-          </div>
-          <div class="countdown btn btn-default timer-btn tiles" data-timer="<%= @box.time_left * 60 %>">ONE OPENING
-          </div>
         </div>
+        <% if @box.countdownable? %>
+          <div class="countdown btn btn-default timer-btn tiles" data-expiration="<%= @box.expiration_date_time %>">
+          </div>
+        <% end %>
       </div>
     </div>
-    <div class="status">
-      <% if  user_signed_in? %>
-        <% if @box.is_unlockable?(@latitude, @longitude, @limit_in_km, current_user) %>
-          <div class= "btn btn-primary open-btn"><%= link_to "OPEN IT !", box_path(@box), class: 'open-it' %>
-          </div>
-        <% elsif !current_user.has_sufficient_credit? %>
-            <div class="btn btn-primary btn-status text-center">Can't be only viewer, you have to creboxes
-            </div>
-        <% elsif !@box.is_within_reach?(@latitude, @longitude, @limit_in_km) %>
-          <div class="btn btn-primary btn-status text-center">Not close enough <%= @distance.roundto_s %> km to go!
-          </div>
-        <% end %>
-      <% else %>
-        <% if @box.is_within_reach?(@latitude, @longitude, @limit_in_km) %>
-          <div class= "btn btn-primary open-btn"><%= link_to "OPEN IT !", box_path(@box), class: 'open-it' %>
-          </div>
-        <% else %>
-          <div class="btn btn-primary btn-status text-center">Not close enough, <%= @distance.round(2).to_s %>km to go !
-          </div>
-        <% end %>
-      <% end %>
-    </div>
   </div>
-
-
+  <div class="status">
+    <% if  user_signed_in? %>
+      <% if @box.is_unlockable?(@latitude, @longitude, @limit_in_km, current_user) %>
+        <div class= "btn btn-primary open-btn"><%= link_to "OPEN IT !", box_path(@box), class: 'open-it' %>
+        </div>
+      <% elsif !current_user.has_sufficient_credit? %>
+          <div class="btn btn-primary btn-status text-center">You have to create boxes
+          </div>
+      <% elsif !@box.is_within_reach?(@latitude, @longitude, @limit_in_km) %>
+        <div class="btn btn-primary btn-status text-center"><%= @distance.round(2).to_s %>km further away
+        </div>
+      <% end %>
+    <% else %>
+      <% if @box.is_within_reach?(@latitude, @longitude, @limit_in_km) %>
+        <div class= "btn btn-primary open-btn"><%= link_to "OPEN IT !", box_path(@box), class: 'open-it' %>
+        </div>
+      <% else %>
+        <div class="btn btn-primary btn-status text-center"><%= @distance.round(2).to_s %>km further away
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

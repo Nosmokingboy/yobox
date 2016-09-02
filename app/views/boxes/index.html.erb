@@ -55,13 +55,15 @@
                   <% if Rails.env == "development" %>
                   url: "http://localhost:3000/boxes/" + box_id + "/preview",
                   <% else %>
-                  url: "https://yobox.herokuapp.com/boxes/" + box_id + "/preview",
+                  url: "https://youmanbox.herokuapp.com/boxes/" + box_id + "/preview",
                   <% end %>
                   data: { "lat": lat, "lng": lng },
                   success: function(data) {
                     infowindow = new google.maps.InfoWindow({content: data});
                     infowindow.open( handler.getMap(), marker.getServiceObject());
-                    countdown()
+                    google.maps.event.addListener(infowindow, 'domready', function() {
+                      countdown("#" + $(data).first().attr("id"));
+                    });
                   }
                 });
               });
