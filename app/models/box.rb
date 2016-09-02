@@ -10,9 +10,9 @@ class Box < ApplicationRecord
 
   scope :limited, -> { where.not(openings_max: nil) }
   scope :nolimit, -> { where(openings_max: nil) }
-  scope :alive,   -> { includes(:openings).where('expiration_date_time >= ?', DateTime.now).references(:openings) }
-  scope :once,    -> { includes(:openings).where("openings_max < (SELECT COUNT(*) FROM openings WHERE box_id = boxes.id)").references(:openings) }
-  scope :openables, -> { alive.or(once) }
+  scope :alive,   -> { includes(:openings).where('expiration_date_time >= ? AND openings_max IS NULL', DateTime.now).references(:openings) }
+  scope :once,    -> { includes(:openings).where("openings_max > (SELECT COUNT(*) FROM openings WHERE box_id = boxes.id)").references(:openings) }
+  scope :openables, -> { alive + Box.once }
 
   def is_unlockable?(latitude, longitude, limit_in_km, user)
     is_within_reach?(latitude, longitude, limit_in_km) && user.has_sufficient_credit?
@@ -50,5 +50,9 @@ class Box < ApplicationRecord
   def is_within_reach?(latitude, longitude, limit_in_km)
     d = Geocoder::Calculations.distance_between([latitude, longitude], [self.latitude, self.longitude])
     d <= limit_in_km
+  end
+
+  def countdownable?
+    openings_max.blank?
   end
 end

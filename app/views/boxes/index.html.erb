@@ -61,7 +61,9 @@
                   success: function(data) {
                     infowindow = new google.maps.InfoWindow({content: data});
                     infowindow.open( handler.getMap(), marker.getServiceObject());
-                    countdown()
+                    google.maps.event.addListener(infowindow, 'domready', function() {
+                      countdown("#" + $(data).first().attr("id"));
+                    });
                   }
                 });
               });

@@ -61,7 +61,7 @@ def create_boxes(min_lat, max_lat, min_lng, max_lng, number, reach, users, links
     b.longitude = rand(min_lng..max_lng)
     b.expiration_date_time = Faker::Time.between(DateTime.now - 7, DateTime.now + 7)
     b.icon = Faker::SlackEmoji.emoji
-    b.openings_max = rand(1..2) == 1 ? nil : rand(1..7) # 1 fois sur 2, pas de nb limite
+    b.openings_max = rand(1..2) == 1 ? nil : 2 # 1 fois sur 2, pas de nb limite
     b.user = users.sample
     b.save
     res << b

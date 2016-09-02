@@ -2,9 +2,12 @@
 
 var countdowns = [];
 
-function countdown() {
-  var minutes = $( '.countdown' ).data('timer');
-  var target_date = new Date().getTime() + ((minutes * 60 ) * 1000); // set the countdown date
+function countdown(countdown_id) {
+
+  var expiration = $(countdown_id + " .countdown").data("expiration")
+  var msToGo = (moment(expiration) - moment());
+  var seconds = msToGo / 1000;
+  var target_date = new Date().getTime() + (( seconds ) * 1000); // set the countdown date
   var time_limit = ((minutes * 60 ) * 1000);
   var days, hours, minutes, seconds; // variables for time units
   var $countdown = $(".tiles"); // get tag element
